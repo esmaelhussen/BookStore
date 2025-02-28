@@ -12,6 +12,6 @@ export const categoriesSlice = createSlice({
   },
 });
 
-export const { addBook, removeBook } = categoriesSlice.actions;
+export const { checkStatus } = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;
