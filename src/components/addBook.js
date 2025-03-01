@@ -8,7 +8,7 @@ function AddBook() {
   const [author, setAuthor] = useState('');
   const dispatch = useDispatch();
 
-  const handleAddBook = () => {
+  const handleAddBook = (e) => {
     if (title && author) {
       dispatch(addBook({
         id: nanoid(),
@@ -19,6 +19,7 @@ function AddBook() {
       setTitle('');
       setAuthor('');
     }
+    e.preventDefault();
   };
 
   return (
@@ -39,7 +40,7 @@ function AddBook() {
           onChange={(e) => setAuthor(e.target.value)}
           className="p-3 border border-w1 bg-white text-base w-[100%] md:w-[50%]"
         />
-        <button type="submit" onClick={handleAddBook} className="text-white font-bold font-serif px-6 py-2 rounded-md bg-primary cursor-pointer md:w-[30%] mx-auto">Add Book</button>
+        <button type="submit" onClick={handleAddBook} className="text-white font-bold font-serif px-6 py-2 rounded-md bg-[#0290ff] cursor-pointer md:w-[30%] mx-auto">Add Book</button>
       </form>
     </div>
   );

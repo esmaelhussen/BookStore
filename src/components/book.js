@@ -7,8 +7,6 @@ function Books() {
   const books = useSelector((state) => state.books.books);
   const dispatch = useDispatch();
 
-  console.log('books', books);
-
   return (
     <div className="p-[5%] bg-w2">
       {books.map((book) => (
