@@ -1,5 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const data = async () => {
+  const game = await fetch('https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/', {
+    method: 'POST',
+  });
+  const createdgame = await game.json();
+  console.log('createdgame', createdgame);
+}
+data()
+
 const initialState = {
   books:
     [
