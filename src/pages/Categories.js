@@ -9,7 +9,7 @@ function Categories() {
     dispatch(checkStatus());
   };
   return (
-    <div>
+    <div className="p-[5%] bg-w2">
       <button
         type="button"
         className=" text-white font-bold font-serif px-6 py-2 rounded-md bg-[#0290ff] cursor-pointer w-[20%] items-center"
