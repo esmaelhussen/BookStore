@@ -6,7 +6,7 @@
 
 ## Live Demo
 
-[Live link here](https://esmaelhussen.github.io/bookStore/)
+[Live link here](https://esmaelhussen.github.io/BookStore/)
 
 
 ## Built With
