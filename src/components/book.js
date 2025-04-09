@@ -1,33 +1,39 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { removeBook } from '../redux/books/books';
-import AddBook from './addBook';
+/* eslint-disable camelcase */
+import PropTypes from 'prop-types';
+import Action from './Action';
+import Progress from './Progress';
 
-function Books() {
-  const books = useSelector((state) => state.books.books);
-  const dispatch = useDispatch();
-
+function Book({ book }) {
+  const {
+    item_id, title, author, category,
+  } = book;
+  const progress = {
+    percent: Math.floor(Math.random() * 100),
+    chapter: Math.floor(Math.random() * 20),
+  };
   return (
-    <div className="p-[5%] bg-w2">
-      {books.map((book) => (
-        <div key={book.id} className=" bg-white py-6 px-[5%]">
-          <h3>{book.title}</h3>
-          <p>
-            Author:
-            {' '}
-            {book.author}
-          </p>
-          <p>
-            Category:
-            {' '}
-            {book.category}
-          </p>
-          <button type="button" onClick={() => dispatch(removeBook(book.id))}>Remove</button>
+    <div className="p-8 bg-white rounded border border-w1 flex justify-between flex-col md:flex-row gap-4">
+      <div className="flex md:flex-col justify-between border-w1 border-b md:border-0">
+        <div>
+          <p className="font-bold opacity-50">{category}</p>
+          <h2 className="font-bold text-xl">{title}</h2>
+          <p className="text-sm font-light text-secondary">{author}</p>
         </div>
-      ))}
-      <AddBook />
+        <Action id={item_id} />
+      </div>
+      <Progress progress={progress} />
     </div>
   );
 }
 
-export default Books;
+Book.propTypes = {
+  book: PropTypes.shape({
+    item_id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    progress: PropTypes.objectOf(Progress).isRequired,
+  }).isRequired,
+};
+
+export default Book;

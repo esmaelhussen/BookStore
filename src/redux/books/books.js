@@ -1,55 +1,42 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-const data = async () => {
-  const game = await fetch('https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/', {
-    method: 'POST',
-  });
-  const createdgame = await game.json();
-  console.log('createdgame', createdgame);
-}
-data()
+const CREATE_BOOK = 'books/CREATE_BOOK';
+const REMOVE_BOOK = 'books/REMOVE_BOOK';
+const GET_BOOKS = 'books/GET_BOOKS';
 
-const initialState = {
-  books:
-    [
-      {
-        id: 'item1',
-        title: 'The Great Gatsby',
-        author: 'John Smith',
-        category: 'Fiction',
-      },
-      {
-        id: 'item2',
-        title: 'Anna Karenina',
-        author: 'Leo Tolstoy',
-        category: 'Fiction',
-      },
-      {
-        id: 'item3',
-        title: 'The Selfish Gene',
-        author: 'Richard Dawkins',
-        category: 'Nonfiction',
-      },
-    ],
+const URL = 'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/pl5G5wcNyMGN6n0lX0tS/books';
+const initialBooks = [];
+
+/* eslint-disable default-param-last */
+export default (state = initialBooks, action) => {
+  switch (action.type) {
+    case `${CREATE_BOOK}/fulfilled`:
+      return [...state, action.payload];
+    case `${REMOVE_BOOK}/fulfilled`:
+      return state.filter((book) => book.item_id !== action.payload);
+    case `${GET_BOOKS}/fulfilled`:
+      return action.payload;
+    default:
+      return state;
+  }
 };
 
-export const booksSlice = createSlice({
-  name: 'books',
-  initialState,
-  reducers: {
-    addBook: (state, action) => {
-      state.books.push(action.payload);
-    },
-    removeBook: (state, action) => {
-      const updatedBooks = state.books.filter((book) => book.id !== action.payload);
-      return {
-        ...state,
-        books: updatedBooks,
-      };
-    },
-  },
+export const createBook = createAsyncThunk(CREATE_BOOK, async (book) => {
+  await axios.post(URL, book);
+  return book;
 });
 
-export const { addBook, removeBook } = booksSlice.actions;
+export const removeBook = createAsyncThunk(REMOVE_BOOK, async (id) => {
+  await axios.delete(`${URL}/${id}`);
+  return id;
+});
 
-export default booksSlice.reducer;
+export const getBooks = createAsyncThunk(GET_BOOKS, async () => {
+  const response = await axios.get(URL);
+  const data = Object.keys(response.data).map((id) => ({
+    item_id: id,
+    ...response.data[id][0],
+  }));
+  return data;
+});

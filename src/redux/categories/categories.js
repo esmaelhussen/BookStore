@@ -1,17 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
+const CHECK_STATUS = 'categories/CHECK_STATUS';
 
-const initialState = {
-  categories: [],
+/* eslint-disable default-param-last */
+const categoriesReducer = (state = [], action) => {
+  switch (action.type) {
+    case CHECK_STATUS:
+      return 'Under construction';
+    default:
+      return state;
+  }
 };
 
-export const categoriesSlice = createSlice({
-  name: 'categories',
-  initialState,
-  reducers: {
-    checkStatus: () => 'Under construction',
-  },
+export const checkStatus = () => ({
+  type: CHECK_STATUS,
 });
 
-export const { checkStatus } = categoriesSlice.actions;
-
-export default categoriesSlice.reducer;
+export default categoriesReducer;
