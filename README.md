@@ -78,7 +78,7 @@ npm run test
 
 ## Author
 
-👤 **Esmael Hussen **
+👤 **Esmael Hussen**
 
 - GitHub: [Click here](https://github.com/esmaelhussen)
 - Twitter: [Click here](https://twitter.com/esmaelhussenA)
